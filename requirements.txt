@@ -1,0 +1,32 @@
+causalml==0.15.2
+dowhy==0.12
+xgboost
+shap
+matplotlib
+seaborn
+scikit-learn
+pandas
+numpy
+dask[dataframe]
+# The following versions were inferred from the notebook's pip install output or dependencies:
+Cython==0.29.34
+forestci==0.6
+pathos==0.2.9
+dill==0.3.9
+pygam==0.9.1
+scipy==1.11.4 # Note: A different version might have been initially satisfied
+statsmodels # Dependency of causalml
+pydotplus # Dependency of causalml
+tqdm # Dependency of causalml
+lightgbm # Dependency of causalml
+graphviz # Dependency of causalml
+ppft==1.7.6.9
+pox==0.3.5
+causal-learn==0.1.4.0
+momentchi2==0.1.8
+multiprocess==0.70.17
+
+# Please verify and lock down the versions for packages without explicit versions 
+# (xgboost, shap, matplotlib, seaborn, scikit-learn, pandas, numpy, dask, statsmodels, etc.) 
+# by running `pip freeze > requirements.txt` in your project's virtual environment 
+# after ensuring all code runs correctly.
