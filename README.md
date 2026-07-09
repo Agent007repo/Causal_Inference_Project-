@@ -1,70 +1,60 @@
-# Causal Inference Analysis of Email Marketing Campaign
+# Causal Inference Analysis of an Email Marketing Campaign
 
-## Project Overview
+This project estimates the causal effect of a men's email marketing campaign on customer conversion. It uses treatment/control framing, meta-learners, and causal robustness checks to move beyond correlation and estimate whether the campaign changed customer behavior.
 
-This project performs a causal inference analysis to determine the impact of sending a "Mens E-Mail" marketing campaign on customer conversion rates. The analysis uses data from an e-commerce platform and employs various statistical techniques to estimate the causal effect of the email treatment.
+## What This Shows
+
+- Product and marketing analytics with causal framing
+- Average Treatment Effect (ATE) estimation
+- S-learner and T-learner modeling patterns
+- DoWhy-style causal model specification and refutation
+- Business interpretation of lift, not just model output
+
+## Business Question
+
+Did sending the men's email campaign increase conversion probability after controlling for customer history and demographic/product-affinity covariates?
 
 ## Methodology
 
-The primary methodologies used in this project include:
+1. Define treatment, outcome, and covariates.
+2. Estimate ATE using CausalML meta-learners.
+3. Compare S-learner and T-learner results.
+4. Use DoWhy for causal graph framing, estimation, and placebo refutation.
+5. Translate the estimated lift into a marketing/product decision.
 
-1.  **CausalML Meta-Learners:**
-    *   **S-Learner (Linear Regression):** Estimates the Average Treatment Effect (ATE) by modeling the outcome directly using treatment status as a feature.
-    *   **T-Learner (XGBoost):** Estimates ATE by building separate models for the treatment and control groups and comparing their predictions.
-2.  **DoWhy Framework:**
-    *   **Causal Model Definition:** A causal graph is implicitly or explicitly defined to identify confounders.
-    *   **Effect Estimation:** The causal effect is estimated using a backdoor adjustment strategy (e.g., via Linear Regression).
-    *   **Refutation Testing:** A placebo treatment test is conducted to validate the robustness of the estimated causal effect.
+## Covariates Used
 
-Key covariates considered in the models include: `history` (customer's past purchase value), `womens` (whether customer bought women's items), `mens` (whether customer bought men's items), `recency` (days since last purchase), and `newbie` (whether the customer is new).
-
-## Key Libraries Used
-
-*   `causalml`: For implementing S-learner and T-learner meta-learners.
-*   `dowhy`: For causal model specification, estimation, and refutation.
-*   `pandas`: For data manipulation and analysis.
-*   `numpy`: For numerical operations.
-*   `scikit-learn`: For machine learning utilities and metrics.
-*   `xgboost`: For the T-learner model.
-*   `matplotlib` & `seaborn`: For data visualization.
-*   `shap`: (Potentially used for model interpretability, as it's in installations).
+| Feature | Meaning |
+|---|---|
+| `history` | Customer's past purchase value |
+| `womens` | Whether the customer bought women's items |
+| `mens` | Whether the customer bought men's items |
+| `recency` | Days since last purchase |
+| `newbie` | Whether the customer is new |
 
 ## Summary of Findings
 
-*   The analysis consistently indicates a **positive, albeit modest, causal effect** of the "Mens E-Mail" on conversion rates. The estimated Average Treatment Effect (ATE) is approximately **+0.0067 to +0.0068** (a 0.67 to 0.68 percentage point increase in the probability of conversion).
-*   Feature importance analysis (e.g., from the XGBoost T-learner) highlighted variables like `womens`, `history`, and `newbie` as significant predictors of conversion.
-*   A placebo refutation test supported the validity of the findings, suggesting the observed effect is not likely due to random chance or simple confounding.
+The analysis indicates a positive but modest campaign effect. Estimated ATE is approximately +0.0067 to +0.0068, meaning the email increased conversion probability by about 0.67 to 0.68 percentage points. Placebo refutation supports that the observed effect is not likely random noise.
 
-## Files in this Repository
+## Repository Contents
 
-*   `Individual_Assignment_2_Causal_Inference.ipynb`: The main Jupyter Notebook containing all the code, analysis, visualizations, and detailed explanations.
-*   `README.md`: This file, providing an overview of the project.
-*   `requirements.txt`: A list of Python dependencies required to run the notebook.
-*   `.gitignore`: Specifies intentionally untracked files that Git should ignore.
+| File | Purpose |
+|---|---|
+| `Individual_Assignment_2_Causal_Inference.ipynb` | Main notebook with preprocessing, causal estimation, and interpretation |
+| `requirements.txt` | Python dependencies |
+| `.gitignore` | Ignore rules for local artifacts |
 
-## How to Run
+## How To Run
 
-1.  **Clone the repository:**
-    ```bash
-    git clone <repository-url>
-    cd <repository-name>
-    ```
-2.  **Create and activate a virtual environment (recommended):**
-    ```bash
-    python -m venv venv
-    source venv/bin/activate  # On Windows use `venv\Scripts\activate`
-    ```
-3.  **Install dependencies:**
-    ```bash
-    pip install -r requirements.txt
-    ```
-4.  **Launch Jupyter Lab or Jupyter Notebook and open `Individual_Assignment_2_Causal_Inference.ipynb`:**
-    ```bash
-    jupyter lab
-    # or
-    jupyter notebook
-    ```
+```bash
+git clone https://github.com/Agent007repo/Causal_Inference_Project-.git
+cd Causal_Inference_Project-
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+jupyter notebook Individual_Assignment_2_Causal_Inference.ipynb
+```
 
-## Further Details
+## Recruiter Signal
 
-Please refer to the Jupyter Notebook (`Individual_Assignment_2_Causal_Inference.ipynb`) for a detailed walkthrough of the data preprocessing, model implementation, results, and interpretation, including any visualizations generated.
+This is strongest for product analytics, decision science, marketing analytics, and PM roles where the hiring team wants evidence that you can distinguish correlation from causal impact.
