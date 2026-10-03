@@ -1,60 +1,24 @@
 # Causal Inference Analysis of an Email Marketing Campaign
 
-This project estimates the causal effect of a men's email marketing campaign on customer conversion. It uses treatment/control framing, meta-learners, and causal robustness checks to move beyond correlation and estimate whether the campaign changed customer behavior.
+Estimate the effect of the men's email campaign on conversion in the Hillstrom email-marketing dataset. The notebook compares CausalML S- and T-learners and specifies a DoWhy causal model with a placebo refutation.
 
-## What This Shows
+## Run
 
-- Product and marketing analytics with causal framing
-- Average Treatment Effect (ATE) estimation
-- S-learner and T-learner modeling patterns
-- DoWhy-style causal model specification and refutation
-- Business interpretation of lift, not just model output
-
-## Business Question
-
-Did sending the men's email campaign increase conversion probability after controlling for customer history and demographic/product-affinity covariates?
-
-## Methodology
-
-1. Define treatment, outcome, and covariates.
-2. Estimate ATE using CausalML meta-learners.
-3. Compare S-learner and T-learner results.
-4. Use DoWhy for causal graph framing, estimation, and placebo refutation.
-5. Translate the estimated lift into a marketing/product decision.
-
-## Covariates Used
-
-| Feature | Meaning |
-|---|---|
-| `history` | Customer's past purchase value |
-| `womens` | Whether the customer bought women's items |
-| `mens` | Whether the customer bought men's items |
-| `recency` | Days since last purchase |
-| `newbie` | Whether the customer is new |
-
-## Summary of Findings
-
-The analysis indicates a positive but modest campaign effect. Estimated ATE is approximately +0.0067 to +0.0068, meaning the email increased conversion probability by about 0.67 to 0.68 percentage points. Placebo refutation supports that the observed effect is not likely random noise.
-
-## Repository Contents
-
-| File | Purpose |
-|---|---|
-| `Individual_Assignment_2_Causal_Inference.ipynb` | Main notebook with preprocessing, causal estimation, and interpretation |
-| `requirements.txt` | Python dependencies |
-| `.gitignore` | Ignore rules for local artifacts |
-
-## How To Run
+Use a clean Python 3.11 environment and install `requirements.txt`. Dependency installation is explicit, rather than performed inside the notebook. Place `hillstrom.csv` in this directory or set `HILLSTROM_CSV`. Without a local file the notebook attempts its public source URL, requiring internet access.
 
 ```bash
-git clone https://github.com/Agent007repo/Causal_Inference_Project-.git
-cd Causal_Inference_Project-
-python -m venv .venv
-source .venv/bin/activate
 pip install -r requirements.txt
 jupyter notebook Individual_Assignment_2_Causal_Inference.ipynb
 ```
 
-## Recruiter Signal
+Covariates include purchase history, recency, men's/women's purchase indicators, and newcomer status. The analysis compares the men's campaign with the no-email control. The XGBoost importance plots now use the fitted treatment and control estimators separately. They explain outcome-model predictors, not causal importance or heterogeneous treatment effects.
 
-This is strongest for product analytics, decision science, marketing analytics, and PM roles where the hiring team wants evidence that you can distinguish correlation from causal impact.
+## Interpretation and validation
+
+Previously reported ATE estimates around 0.0067–0.0068 are historical, unverified outputs. Recompute estimates and uncertainty in a compatible environment before citing them. A placebo refutation tests one robustness concern; it cannot prove identification or eliminate every confounder. Outputs are cleared to avoid presenting stale results as a current run.
+
+```bash
+python -m unittest discover -s tests -p test_regressions.py -v
+```
+
+The regression test checks the importance plotting block against fitted-estimator stand-ins. The CausalML fitted-model access was checked against version 0.15.2 source. Full estimation and DoWhy integration remain unverified in the review environment.
